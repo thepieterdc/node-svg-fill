@@ -5,6 +5,7 @@
     "lib": [
       "ES6"
     ],
+    "module": "CommonJS",
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,

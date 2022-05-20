@@ -22,7 +22,7 @@ jobs:
       - name: Create a release branch
         run: |
           git checkout -b release
-          git push -u origin release
+          git push -u origin -f release
       - name: Install Node.js 16.x
         uses: actions/setup-node@v3
         with:

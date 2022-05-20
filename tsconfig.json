@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "allowUnreachableCode": false,
+    "incremental": true,
+    "lib": [
+      "ES6"
+    ],
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./dist",
+    "removeComments": false,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES6"
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}

@@ -1,0 +1,40 @@
+name: NodeJS
+
+on:
+  pull_request:
+    branches:
+      - master
+
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Get the Yarn cache directory
+        id: yarn-cache
+        run: |
+          echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache Yarn dependencies
+        uses: actions/cache@v3.0.2
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - run: yarn install
+
+      - run: yarn build
+
+      - run: yarn test

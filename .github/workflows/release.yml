@@ -1,11 +1,12 @@
 name: Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: Version number
-        required: true
+  push:
+#  workflow_dispatch:
+#    inputs:
+#      version:
+#        description: Version number
+#        required: true
 
 jobs:
   release:
@@ -17,6 +18,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: master
 
       - name: Create a release branch
         run: |
@@ -28,14 +31,14 @@ jobs:
           node-version: '16'
 
       - name: Set the version in package.json
-        run: yarn version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
+        run: yarn version --new-version 1.0.0 --no-git-tag-version
 
       - name: Create a release commit
         uses: EndBug/add-and-commit@v9.0.0
         with:
           add: 'package.json'
           commit: '--signoff'
-          message: Release v${{ github.event.inputs.version }}
+          message: Release v1.0.0
           push: false
 
       - name: Get the Yarn cache directory
@@ -60,7 +63,7 @@ jobs:
       - name: Create tag
         uses: mathieudutour/github-tag-action@v6.0
         with:
-          custom_tag: ${{ github.event.inputs.version }}
+          custom_tag: 1.0.0
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create release
@@ -71,11 +74,13 @@ jobs:
         with:
           draft: false
           prerelease: false
-          release_name: v${{ github.event.inputs.version }}
-          tag_name: v${{ github.event.inputs.version }}
+          release_name: v1.0.0
+          tag_name: v1.0.0
 
       - name: Publish to NPM
-        run: yarn publish
+        run: yarn publish  --no-git-tag-version
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
 
       - name: Prepare package.json for next version
         run: yarn version --patch --no-git-tag-version
@@ -92,5 +97,5 @@ jobs:
         with:
           destination_branch: "master"
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_title: Release v${{ github.event.inputs.version }}
+          pr_title: Release v1.0.0
           source_branch: release

@@ -1,0 +1,32 @@
+{
+  "name": "node-svg-fill",
+  "version": "1.0.0",
+  "description": "NodeJS package to fill (part of) an SVG image in a given colour.",
+  "author": {
+    "email": "pieterdeclercq@outlook.com",
+    "name": "Pieter De Clercq",
+    "url": "https://thepieterdc.github.io/"
+  },
+  "keywords": [
+    "colour",
+    "fill",
+    "gradient",
+    "svg"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thepieterdc/node-svg-fill.git"
+  },
+  "main": "src/index.js",
+  "license": "MIT",
+  "private": false,
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {
+    "svgson": "^5.2.1"
+  },
+  "devDependencies": {
+    "prettier": "^2.6.2"
+  }
+}

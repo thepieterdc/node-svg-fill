@@ -1,5 +1,7 @@
 # node-svg-fill
 
+![npm](https://img.shields.io/npm/v/node-svg-fill?style=flat-square)
+
 NodeJS package to fill (part of) an SVG image in a given colour.
 
 ## Installation

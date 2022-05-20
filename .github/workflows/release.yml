@@ -29,6 +29,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Set the version in package.json
         run: yarn version --new-version 1.0.0 --no-git-tag-version
@@ -78,7 +79,9 @@ jobs:
           tag_name: v1.0.0
 
       - name: Publish to NPM
-        run: yarn publish  --no-git-tag-version
+        run:
+          yarn login npm --publish
+          yarn publish --no-git-tag-version
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
 

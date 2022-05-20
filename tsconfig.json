@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowUnreachableCode": false,
+    "declaration": true,
     "incremental": true,
     "lib": [
       "ES6"
@@ -16,8 +17,12 @@
     "strict": true,
     "target": "ES6"
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "test"
   ]
 }

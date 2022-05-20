@@ -17,13 +17,15 @@
     "type": "git",
     "url": "https://github.com/thepieterdc/node-svg-fill.git"
   },
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "private": false,
   "engines": {
     "node": ">=14"
   },
   "scripts": {
+    "build": "tsc",
     "test": "jest"
   },
   "dependencies": {

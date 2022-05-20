@@ -79,8 +79,7 @@ jobs:
           tag_name: v1.0.0
 
       - name: Publish to NPM
-        run:
-          yarn login npm --publish
+        run: |
           yarn publish --no-git-tag-version
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}

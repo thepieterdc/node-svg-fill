@@ -17,6 +17,9 @@
     "type": "git",
     "url": "https://github.com/thepieterdc/node-svg-fill.git"
   },
+  "files": [
+    "dist/"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",

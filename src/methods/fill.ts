@@ -5,6 +5,7 @@ import { parse, stringify } from "svgson";
  *
  * @param input the input image
  * @param color the color to fill
+ * @return the filled image
  */
 export default async function fill(input: string, color: string): Promise<string> {
     // Parse the image.

@@ -1,5 +1,19 @@
 const {parse, stringify} = require("svgson");
-exports.fillImage = async function (input, gradients, direction) {
+
+exports.fill = async function (input, color) {
+    // Parse the image.
+    const svg = await parse(input);
+
+    // Set the fill colour.
+    svg.children.forEach(c => {
+        c.attributes.fill = color;
+    });
+
+    return stringify(svg);
+}
+
+
+exports.fillGradient = async function (input, gradients, direction) {
     // Parse the image.
     const svg = await parse(input);
 
@@ -14,7 +28,7 @@ exports.fillImage = async function (input, gradients, direction) {
                 name: "linearGradient",
                 attributes: {
                     id: "gradientFill",
-                    gradientTransform: `rotate(${direction})`
+                    gradientTransform: `rotate(${direction || 0})`
                 },
                 children: gradients.flatMap(({color, from, to}) => [
                     {

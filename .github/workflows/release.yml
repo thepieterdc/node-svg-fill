@@ -1,12 +1,11 @@
 name: Release
 
 on:
-  push:
-#  workflow_dispatch:
-#    inputs:
-#      version:
-#        description: Version number
-#        required: true
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version number
+        required: true
 
 jobs:
   release:
@@ -29,7 +28,7 @@ jobs:
           node-version: '16'
 
       - name: Set the version in package.json
-        run: yarn version --new-version 0.0.1 --no-git-tag-version
+        run: yarn version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
 
       - name: Create a release commit
         uses: EndBug/add-and-commit@v9.0.0
@@ -55,55 +54,43 @@ jobs:
       - name: Install Yarn dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Package the extension
-        run: yarn package
-#
-#      - name: Create tag
-#        uses: mathieudutour/github-tag-action@v6.0
-#        with:
-#          custom_tag: ${{ github.event.inputs.version }}
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Create release
-#        id: release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          draft: false
-#          prerelease: false
-#          release_name: v${{ github.event.inputs.version }}
-#          tag_name: v${{ github.event.inputs.version }}
-#
-#      - name: Attach artifact to release
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          asset_content_type: application/octet-stream
-#          asset_name: dodona-plugin-vscode-${{ github.event.inputs.version }}.vsix
-#          asset_path: ./dodona-plugin-vscode-${{ github.event.inputs.version }}.vsix
-#          upload_url: ${{ steps.release.outputs.upload_url }}
-#
-#      - name: Publish to Azure Marketplace
-#        run: yarn run vscode:publish
-#        env:
-#          VSCE_PAT: ${{ secrets.VSCE_PAT }}
-#
-#      - name: Prepare package.json for next version
-#        run: node scripts/prepare-next-snapshot.js
-#
-#      - name: Push new development commit
-#        uses: EndBug/add-and-commit@v9.0.0
-#        with:
-#          add: 'package.json'
-#          commit: '--signoff'
-#          message: 'Prepare next development cycle'
-#
-#      - name: Open a pull request
-#        uses: repo-sync/pull-request@v2
-#        with:
-#          destination_branch: "master"
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          pr_title: Release v${{ github.event.inputs.version }}
-#          source_branch: release
+      - name: Build the module
+        run: yarn build
+
+      - name: Create tag
+        uses: mathieudutour/github-tag-action@v6.0
+        with:
+          custom_tag: ${{ github.event.inputs.version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create release
+        id: release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          draft: false
+          prerelease: false
+          release_name: v${{ github.event.inputs.version }}
+          tag_name: v${{ github.event.inputs.version }}
+
+      - name: Publish to NPM
+        run: yarn publish
+
+      - name: Prepare package.json for next version
+        run: yarn version --patch --no-git-tag-version
+
+      - name: Push new development commit
+        uses: EndBug/add-and-commit@v9.0.0
+        with:
+          add: 'package.json'
+          commit: '--signoff'
+          message: 'Prepare next development cycle'
+
+      - name: Open a pull request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "master"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_title: Release v${{ github.event.inputs.version }}
+          source_branch: release

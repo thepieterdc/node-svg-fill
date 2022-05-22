@@ -1,6 +1,6 @@
 {
   "name": "node-svg-fill",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "NodeJS package to fill (part of) an SVG image in a given colour.",
   "author": {
     "email": "pieterdeclercq@outlook.com",

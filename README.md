@@ -1,6 +1,6 @@
 # node-svg-fill
 
-![https://www.npmjs.com/package/node-svg-fill](https://img.shields.io/npm/v/node-svg-fill?style=flat-square)
+[![npm](https://img.shields.io/npm/v/node-svg-fill?style=flat-square)](https://www.npmjs.com/package/node-svg-fill)
 [![codecov](https://codecov.io/gh/thepieterdc/node-svg-fill/branch/master/graph/badge.svg?token=THusEk1EON)](https://codecov.io/gh/thepieterdc/node-svg-fill)
 
 NodeJS package to fill (part of) an SVG image in a given colour.

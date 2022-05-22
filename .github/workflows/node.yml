@@ -38,3 +38,9 @@ jobs:
       - run: yarn build
 
       - run: yarn test
+
+      - name: Upload the coverage report
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/lcov.info
+          token: ${{ secrets.CODECOV_TOKEN }}

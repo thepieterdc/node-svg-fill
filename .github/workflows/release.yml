@@ -34,7 +34,7 @@ jobs:
         run: yarn version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
 
       - name: Create a release commit
-        uses: EndBug/add-and-commit@v9.1.3
+        uses: EndBug/add-and-commit@v9.1.4
         with:
           add: 'package.json'
           commit: '--signoff'
@@ -87,7 +87,7 @@ jobs:
         run: yarn version --patch --no-git-tag-version
 
       - name: Push new development commit
-        uses: EndBug/add-and-commit@v9.1.3
+        uses: EndBug/add-and-commit@v9.1.4
         with:
           add: 'package.json'
           commit: '--signoff'

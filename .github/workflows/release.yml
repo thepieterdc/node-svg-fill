@@ -16,7 +16,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: master
 
@@ -24,17 +24,17 @@ jobs:
         run: |
           git checkout -b release
           git push -u origin -f release
-      - name: Install Node.js 16.x
-        uses: actions/setup-node@v4
+      - name: Install Node.js 22.x
+        uses: actions/setup-node@v7
         with:
-          node-version: '16'
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Set the version in package.json
         run: yarn version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
 
       - name: Create a release commit
-        uses: EndBug/add-and-commit@v9.1.4
+        uses: EndBug/add-and-commit@v11
         with:
           add: 'package.json'
           commit: '--signoff'
@@ -44,10 +44,10 @@ jobs:
       - name: Get the Yarn cache directory
         id: yarn-cache
         run: |
-          echo "::set-output name=dir::$(yarn cache dir)"
+          echo "dir=$(yarn cache dir)" >> "$GITHUB_OUTPUT"
 
       - name: Cache Yarn dependencies
-        uses: actions/cache@v3.3.2
+        uses: actions/cache@v6
         with:
           path: ${{ steps.yarn-cache.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -61,7 +61,7 @@ jobs:
         run: yarn build
 
       - name: Create tag
-        uses: mathieudutour/github-tag-action@v6.2
+        uses: mathieudutour/github-tag-action@v7
         with:
           custom_tag: ${{ github.event.inputs.version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -87,7 +87,7 @@ jobs:
         run: yarn version --patch --no-git-tag-version
 
       - name: Push new development commit
-        uses: EndBug/add-and-commit@v9.1.4
+        uses: EndBug/add-and-commit@v11
         with:
           add: 'package.json'
           commit: '--signoff'
